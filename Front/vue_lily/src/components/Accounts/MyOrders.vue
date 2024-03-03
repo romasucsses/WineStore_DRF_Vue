@@ -1,0 +1,78 @@
+<script setup>
+
+</script>
+
+<template>
+    <div>
+    
+        <table>
+            <tr>
+              <th>Order</th>	
+              <th>Date</th>
+              <th>Status</th>	
+              <th>Total</th>	
+              <th>Actions</th>
+            </tr>
+
+        
+            <tr>
+              <td># order.pk </td>
+              <td> order.date </td>
+              <td> order.status </td>
+              <td>$ total </td>
+              <td><button>View</button></td>
+            </tr>
+        
+
+
+        </table>
+    
+        <h2>You don't have orders yet</h2>
+    
+    </div>
+    
+</template>
+
+<style scoped>
+    .right-info{
+        width: 600px;
+        margin: 20px;
+        
+        
+    }
+
+
+
+    table {
+        margin-left: 10px;
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        background-color: #FFFFFF;
+    }
+
+    th, td {
+        border: 1px solid #483e3e;
+        text-align: left;
+        padding: 10px;
+
+    }
+
+    th {
+        background-color:#f5f3f3;
+
+        color: black;
+    }
+
+
+    table button {
+        width: 80px;
+        height: 30px;
+        border: 2px;
+        border-radius: 5px;
+        background-color: #0084d6;
+        color: white;
+        font-size: 17px;
+
+    }
+</style>
