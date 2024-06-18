@@ -1,0 +1,31 @@
+services:
+  db_lily_shop:
+    image: mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: 'lily_api'
+      MYSQL_USER: 'admin'
+      MYSQL_PORT: '3306'
+      MYSQL_PASSWORD: 'admin5'
+      MYSQL_ROOT_PASSWORD: 'password5'
+    container_name: mysql_lily
+
+  redis_lily_shop:
+    image: redis
+    hostname: redis
+    container_name: redis_lily
+
+  back_lily_shop:
+    build: .
+    ports:
+      - '8001:8000'
+    depends_on:
+      - db_lily_shop
+      - redis_lily_shop
+    links:
+      - db_lily_shop
+      - redis_lily_shop
+    volumes:
+      - .:/back_drf
+    container_name: django_lily
