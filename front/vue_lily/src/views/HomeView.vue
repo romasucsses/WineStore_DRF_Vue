@@ -1,6 +1,44 @@
 <script setup>
+  import { RouterLink } from 'vue-router'
+  import { onMounted, ref, computed } from 'vue';
+  import axios from 'axios';
+  import { DOMAIN_NAME } from '@/utils/api_links';
 
-import { RouterLink } from 'vue-router'
+  const products = ref({});
+  const isLoading = ref(true);
+  const hasError = ref(false);
+
+  const finalEndpoint = DOMAIN_NAME + 'products/';
+
+  onMounted(async () => {
+      await getProducts();
+  });
+
+
+  async function getProducts() {
+      try {
+          await axios.get(finalEndpoint)
+              .then(
+                  (response) => {
+                    
+                    products.value = response.data.slice(0, 4);
+                    console.log(products.value);
+                    
+                      
+                  }
+              )
+              .catch((error) => {
+                  console.log(error);
+              })
+      } catch (error) {
+          console.log("some errors with backend server", error)
+          hasError.value = true;
+      } finally {
+          isLoading.value = false;
+          console.log(hasError)
+      }
+      
+  }
 
 
  const items = [
@@ -71,27 +109,30 @@ import { RouterLink } from 'vue-router'
     <div class="home-products">
       <h2 class="featured-prod">Featured Products</h2>
       <div class="products">
-        <!-- <div class="product-card">
-              <a href="{% url 'each_wine' wine_slug=product.slug %}">
-                  <img src="{{ product.image.url }}" alt="Wait please"/>
-              </a>
-              <div class="info-product-shop">
+        <div v-for="product in products" :key="product.id" class="product">
+          <RouterLink :to="{name:'product_detail', params:{slug: product.slug_url}}">
+            <img :src="product.img_url" alt="Wait please" />
+          </RouterLink>
+          <div class="info-product-shop">
             <h2 class="product-name">{{ product.name }} </h2>
-            <p class="product-category">{{ product.category }}</p>
-            <p class="product-price">${{ product.price }}0</p>
+            <p class="product-category">
+              <span v-if="product.category == 1 ">Wine</span>
+              <span v-else>Sparkling</span>
+            </p>
+            <p class="product-price">${{ product.price }}.00</p>
             <div class="review">
-              <p>stars</p>
+
               <div class="stars-img">
-    
-                <img src="{% static 'shop/images/site-img/star-photo-review.svg' %}"/>
-    
+                <img v-for="item in 5" :key="item"
+                  src="../../public/shop/images/site-img/star-photo-review.svg" />
               </div>
             </div>
-          </div> -->
+          </div>
+        </div>
       </div>
-      <button class="products-btn">
-        <a href="#">VIEW ALL PRODUCTS</a>
-      </button>
+      <RouterLink :to="{name: 'shop'}">
+        <button class="products-btn"><a>VIEW ALL PRODUCTS</a></button>
+      </RouterLink>
     </div>
   </div>
 
@@ -171,8 +212,9 @@ button a {
 
 .two-block {
   display: flex;
-  justify-content: space-between;
-  width: 1100px;
+  justify-content: center;
+
+  width: 85%;
 }
 
 
@@ -186,7 +228,7 @@ button a {
 
 .two-block video {
   margin-top: 30px;
-  margin-right: 5px;
+  margin-right: 10%;
   padding-left: 0%;
   padding-right: 0%;
 }
@@ -206,12 +248,13 @@ button a {
 .three-block {
   display: flex;
   margin-top: 75px;
-  justify-content: space-between;
+  justify-content: center;
+  width: 95%;
 }
 
 .three-block img {
-  width: 380px;
-  height: 480px;
+  width: 300px;
+  height: 450px;
   position: relative;
   object-fit: cover;
 }
@@ -221,7 +264,8 @@ button a {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 20px;
+  padding: 10px;
+  margin: 3%;
   position: relative;
   height: 480px;
 }
@@ -265,21 +309,21 @@ button a {
 }
 
 .featured-prod {
-  align-content: center;
-  font-size: 40px;
+  text-align: center;
+  font-size: 30px;
   color: #000000;
 }
 
-.products {
+/* .products {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   max-width: 100%;
   margin-top: 50px;
   padding: 15px;
-}
+} */
 
-.product-card {
+/* .product-card {
   text-align: left;
   padding: 8px;
 }
@@ -335,13 +379,12 @@ button a {
   padding: 1px;
   margin: 1px;
   margin-top: 13px;
-}
+}*/
 
 .products-btn {
   margin-top: 90px;
-  width: 820px;
+  width: 80%;
   height: 50px;
-  margin-left: 20px;
   background-color: rgba(0, 0, 0, 0);
   border: 10%;
   border-color: black;
@@ -358,7 +401,7 @@ button a {
 
 .products-btn:hover a {
   color: white;
-}
+} 
 
 
 @media (max-width: 768px) {
@@ -444,28 +487,10 @@ button a {
   }
 
   .products {
-    display: block;
-    margin: 5px auto;
-  }
+    margin: 0 auto;
+    margin-left: 7%;
+  } 
 
-  .product-card {
-    width: 100%;
-  }
-
-  .product-card img {
-    width: 100%;
-    height: auto;
-  }
-
-  .products-btn {
-    width: 80%;
-    height: 40px;
-    margin: 20px auto;
-    font-size: medium;
-  }
-
-  .products-btn a {
-    font-size: medium;
-  }
+  
 }
 </style>

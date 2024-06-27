@@ -49,7 +49,7 @@
 
 <template>
     <div>
-        <div v-if="shippingData">
+        <div v-if="shippingData && shippingData.length > 0">
             <div class="billing">
                 <div class="head">
                     <h3>Shipping address</h3>

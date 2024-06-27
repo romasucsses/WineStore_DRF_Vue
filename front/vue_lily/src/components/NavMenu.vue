@@ -2,7 +2,9 @@
   <div class="navigation-menu">
     <nav>
       <div class="menu">
-        <img class="logo-img" src="/public/shop/images/site-img/logo.png" />
+        <RouterLink :to="{name: 'home'}">
+          <img class="logo-img" src="/public/shop/images/site-img/logo.png"/>
+        </RouterLink>
         <ul :class="{ 'menu-open': isMenuOpen }">
           <li @click="closeMenu">
             <RouterLink :to="{ name: 'home' }">HOME</RouterLink>

@@ -59,22 +59,29 @@
 
 <template>
     
-    <div>
-        
-        <p>Editing Your Account Information</p>
+        <p class="text">Editing Your Account Information</p>
         <div class="form">
             <div class="fields">
                 <div class="data">
-                    <label>username</label>
-                    <input id="username" name="username" v-model="dataAccount.username" >
-                    <label>email</label>
-                    <input id="email"  name="email" v-model="dataAccount.email"> 
+                    <div>
+                        <label>username</label>
+                        <input id="username" name="username" v-model="dataAccount.username" >
+                    </div>
+                    <div>
+                        <label>email</label>
+                        <input id="email"  name="email" v-model="dataAccount.email"> 
+                    </div>
+
                 </div>
                 <div class="data">
-                    <label>first name</label>
-                    <input id="name" name="name" v-model="dataAccount.name">
-                    <label>last name</label>
-                    <input id="last_name" name="last_name"  v-model="dataAccount.last_name">
+                    <div>
+                        <label>first name</label>
+                        <input id="name" name="name" v-model="dataAccount.name">
+                    </div>
+                    <div>
+                        <label>last name</label>
+                        <input id="last_name" name="last_name"  v-model="dataAccount.last_name">
+                    </div>
                 </div>
             </div>
             <div class="btns">
@@ -82,10 +89,14 @@
                 <button>Reset Password</button>
             </div>
         </div>
-    </div>
+    
 </template>
 
 <style scoped>
+    .text {
+        text-align: center;
+        
+    }
     .right-info .fields{
         display: flex;
         justify-content: space-between;
@@ -142,4 +153,36 @@
     .right-info .btns button {
         margin-bottom: 10px;
     }
+
+    @media (max-width: 768px) {
+    .fields {
+        flex-direction: column;
+    }
+    
+    .right-info .btns {
+        flex-direction: column;
+        margin-left: 20%;
+
+    }
+
+    .btns button {
+        margin:0
+    }
+    button {
+        width: 90%;
+    }
+
+    .right-info .fields{
+        display: table-column;
+        justify-content: center;
+
+    }
+
+    .right-info .data{
+        margin: 10px;
+    }
+    .right-info label{
+        margin-right: 15px;
+    }
+}
 </style>

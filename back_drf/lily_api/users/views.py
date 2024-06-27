@@ -31,9 +31,6 @@ class MyOrdersInfo(APIView):
         orders = OrderInfo.objects.filter(user=request.user)
         return Response(OrdersSerializer(orders, many=True).data)
 
-    def post(self, request):
-        pass
-
 
 class MyDetailOrderInfo(APIView):
     permission_classes = [IsAuthenticated]

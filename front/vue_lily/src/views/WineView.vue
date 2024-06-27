@@ -111,7 +111,7 @@ async function getProducts() {
 
                     <p class="results">Showing all {{ products.length }} results</p>
 
-                    <form class="ordering-form" method="get" action="#">
+                    <form class="ordering-form" method="get">
                         <select name="ordering-by" class="sorting" v-model="SelectedSort" @change="CallSorting()">
                             <option value="default" selected="selected">Sorting by Default</option>
                             <option value="popularity">By popularity</option>

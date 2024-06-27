@@ -24,7 +24,7 @@
 </script>
 
 <template>
-    <div>
+    <div v-if="orderData && orderData.length > 0">
     
         <table>
             <tr>
@@ -48,9 +48,11 @@
 
         </table>
     
-        <h2>You don't have orders yet</h2>
+    
     
     </div>
+    <h2 v-else>You don't have orders yet</h2>
+
     
 </template>
 

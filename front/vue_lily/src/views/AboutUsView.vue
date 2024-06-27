@@ -99,8 +99,10 @@
 
 .content{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-end;
+    padding: 5px;
+    margin: 10px;
 }
 .main-block .left-block{
     font-size: 24px;
@@ -125,6 +127,7 @@
     width: 400px;
     height: 450px;
     margin-right: 8%;
+    margin-left: 8%;
     margin-bottom: 5%;
     object-fit: cover;
     object-position: right;
@@ -162,9 +165,10 @@
 .people{
     display: flex;
     justify-content: center;
-    max-width: 1200px;
+    max-width: 55%;
     flex-wrap: wrap;
-    margin: 50px;
+    margin: 0 auto;
+    margin-top: 10%
 }
 
 .people .card{

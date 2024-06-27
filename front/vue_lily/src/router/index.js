@@ -10,6 +10,7 @@ import my_accounts_router from './my_accounts_router.js';
 import CartView from '@/views/CartView.vue';
 import ProductDetailView from '@/views/ProductDetailView.vue';
 import SuccessfulOrder from '@/views/SuccessfulOrder.vue';
+import ShippingAddressCartView from '@/views/ShippingAddressCartView.vue';
 
 
 const router = createRouter({
@@ -94,6 +95,14 @@ const router = createRouter({
       component: SuccessfulOrder,
       meta: {
         title: 'Successful Order'
+      }
+    },
+    {
+      path: '/client-shipping-address',
+      name: 'client_shipping_address',
+      component: ShippingAddressCartView,
+      meta: {
+        title: 'Your Address'
       }
     },
     

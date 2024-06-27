@@ -29,3 +29,18 @@ services:
     volumes:
       - .:/back_drf
     container_name: django_lily
+
+  worker1:
+    build: .
+    hostname: worker
+    entrypoint: celery
+    container_name: celery
+    volumes:
+      - .:/back_drf
+    links:
+      - redis_lily_shop
+    depends_on:
+      - redis_lily_shop
+      - back_lily_shop
+    working_dir: /back_drf/lily_api
+    command: -A celery_app.app worker --loglevel=info

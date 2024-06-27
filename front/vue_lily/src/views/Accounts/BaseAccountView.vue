@@ -1,7 +1,7 @@
 <script setup>
     
-    import { onBeforeMount } from 'vue';
-import { RouterView, RouterLink } from 'vue-router';
+    import { onMounted } from 'vue';
+    import { RouterView, RouterLink } from 'vue-router';
     import { useRouter } from 'vue-router';
 
     const router = useRouter();
@@ -15,7 +15,7 @@ import { RouterView, RouterLink } from 'vue-router';
         
     };
 
-    onBeforeMount(() => {
+    onMounted(() => {
         const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
         if (isAuthenticated === false){
             router.push({name: 'login'});
@@ -82,12 +82,15 @@ import { RouterView, RouterLink } from 'vue-router';
         border: solid 0.5px;
         border-radius: 5px;
         margin: 7px;
+        
 
     }
 
     .left-menu li:hover{
         width: 370px;
         height: 55px;
+
+        
     }
 
     .left-menu a{
@@ -116,4 +119,24 @@ import { RouterView, RouterLink } from 'vue-router';
         justify-content: center;
     }
 
+    @media (max-width: 768px) {
+        .right-info {
+            display: table-column;
+            justify-content: center;
+    }
+        .main-block {
+            flex-direction: column;
+            align-items: center;
+        }
+        .left-menu li {
+            width: 100%;
+        }
+        .left-menu li:hover {
+            width: 100%;
+        }
+        .right-info {
+            width: 100%;
+            margin: 20px 0;
+        }
+    }
 </style>

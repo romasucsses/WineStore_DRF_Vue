@@ -28,7 +28,7 @@ function AddToCart(product) {
     };
 
     SaveLocalData(cart);
-    // RedirectToCart();
+    RedirectToCart();
     console.log('cart:', cart);
 };
 

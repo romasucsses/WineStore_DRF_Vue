@@ -6,3 +6,4 @@ redis
 pillow==10.3.0
 mysqlclient==2.2.4
 stripe
+celery

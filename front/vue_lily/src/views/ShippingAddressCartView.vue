@@ -1,48 +1,60 @@
 <script setup>
-    import { onMounted } from 'vue';
-    import { getShippingInfo, shippingData, AccessToken } from './MyShipingAddress.vue';
-    import { DOMAIN_NAME } from '../../utils/api_links.js';
+    import { DOMAIN_NAME } from '@/utils/api_links.js';
     import axios from 'axios';
+    import { ref } from 'vue';
     import { useRouter } from 'vue-router';
-    
-
+   
     const router = useRouter();
-    onMounted( () => {
-        getShippingInfo();
-    })
 
-    function saveShippingData(){
-        console.log('Bearer ' + AccessToken.value);
-        const FinalEndPoint = DOMAIN_NAME + 'users/my-account-details/view-my-shipping-info/'
-        axios.patch(FinalEndPoint, shippingData.value, {
-            headers:{
-                Authorization: 'Bearer ' + AccessToken.value
-            }
-        }).then(
-            (response) => {
-                console.log(response);
-            },
-            router.push({name: 'acccount_address'})
+
+    const shippingData = ref({
+        first_name: '',
+        last_name: '',
+        street_address_1: '',
+        city: '',
+        state: '',
+        zip_code: '',
+        phone: '',
+        email: ''
+    });
+    
+    async function placceOrder() {
+        const final_cart = ref(localStorage.getItem('cart_storage'));
+        const total = ref(localStorage.getItem('total_cart'));
+        const orderData = {
             
-        ).catch((error) => {
-            console.log(error);
-        })
+            'cart_data': final_cart.value,
+            'is_paid': false,
+            'payment_method': 'cash',
+            'total_sum' : total.value,
+            'shipping_data' : shippingData.value
+            
+        }
+        const finalEndPoint = DOMAIN_NAME + 'orders/create-new-order/';
+        try{
+            const response = await axios.post(finalEndPoint, orderData );
+            localStorage.setItem('order_id', response.data.order_id);
+            console.log(response);
+            router.push({ name: 'successfull-order'});
+
+        } catch(error){
+            console.error("Got Error: ", error);
+        }
+        
     }
 </script>
 
 <template>
     <div>
-        <h1 class="header-title">View and Edit your Address</h1>
-
-
+        <h1 class="header-title">Fill the Address Info. But remember now we work only in New York</h1>
         <div class="main-block">
             <div class="form">
                 <div class="client-info">
                     <div class="part1-of">
                         <label for="first_name">First Name:</label>
-                        <input type="text" id="first_name" name="first_name" v-model="shippingData.first_name "/>
+                        <input type="text" id="first_name" name="first_name" v-model="shippingData.first_name"/>
                         <label for="last_name">Last Name:</label>
-                        <input type="text" id="last_name" name="last_name" v-model="shippingData.last_name "/>
+                        <input type="text" id="last_name" name="last_name" v-model="shippingData.last_name"/>
                         <label for="street_address_1">Street Address:</label>
                         <textarea id="street_address_1" name="street_address_1" required v-model="shippingData.street_address_1"></textarea>
                         
@@ -58,16 +70,14 @@
                         <input type="text" id="phone" name="phone" required v-model="shippingData.phone"/>
                         <label for="email">Email:</label>
                         <input type="email" id="email" name="email" required v-model="shippingData.email"/>
-
                     </div>
                 </div>
-
-                <button class="btn-add-address" @click="saveShippingData()">Save</button>
-
+                <button class="btn-add-address" @click="placceOrder()">Place Order</button>
             </div>
         </div>
     </div>
 </template>
+
 
 <style scoped>
 .header-title {
@@ -138,10 +148,8 @@ textarea:focus {
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
     .main-block {
-        width: 95%;
-        padding: 5px;
-        margin-left: 6%;
-        
+        width: 90%;
+        padding: 10px;
     }
 
     .client-info {

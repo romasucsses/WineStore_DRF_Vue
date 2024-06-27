@@ -12,11 +12,9 @@ class Coupon(models.Model):
 class ShippingInfo(models.Model):
     first_name = models.CharField(max_length=155)
     last_name = models.CharField(max_length=155)
-    country = models.CharField(max_length=255)
     street_address_1 = models.TextField()
-    street_address_2 = models.TextField(null=True)
     city = models.CharField(max_length=155)
-    state = models.CharField(max_length=155, null=True)
+    state = models.CharField(max_length=155)
     zip_code = models.CharField(max_length=55)
     phone = models.CharField(max_length=155)
     email = models.EmailField()
@@ -44,8 +42,6 @@ class OrderInfo(models.Model):
     user = models.ForeignKey('users.User', on_delete=models.PROTECT, null=True, related_name='user_orders')
     shipping_data = models.ForeignKey('orders.ShippingInfo', on_delete=models.CASCADE, null=True,
                                       related_name='shipping_orders')
-
-
 
     def __str__(self):
         return f'Order Nr.{self.pk}'
